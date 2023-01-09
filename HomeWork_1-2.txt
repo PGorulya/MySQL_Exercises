@@ -1,0 +1,140 @@
+
+Д/З 1
+
+1.
+create table students (
+		id integer not null primary key auto_increment,
+        firstname varchar(128) not null,
+        lastname varchar(128) not null,
+        class integer check(class between 0 and 10),
+        subject varchar(128) not null,
+        mark integer check(mark between 0 and 5)
+);
+
+2.
+insert into students (firstname, lastname, class, subject, mark)
+values 		('Noah', 'Zeipel', 6, 'Mathematics', 4),
+			('Magnus', 'Neitzel', 7, 'English', 5),
+			('Yevhenii', 'Gorulya', 5, 'Mathematics', 5),
+            ('Teo', 'Arnd', 8, 'Physics', 3),
+            ('Dario', 'Pappen', 9, 'English', 4),
+            ('Luan', 'Hemmer', 10, 'Mathematics', 3),
+            ('Franz', 'Boer', 6, 'Physics', 5),
+            ('Lucka', 'Stefan', 8, 'English', 2),
+            ('Nils', 'Kraft', 7, 'Physics', 4),
+            ('Benjamin', 'Rappel', 9, 'English', 5);
+
+3.
+delete from students
+where mark = 0;
+
+4.
+select * from students
+where mark > 3;
+
+5.
+select * from students
+where class = 1 and mark < 3;
+
+6.
+delete from students
+where class = 1 and mark < 3;
+
+7.
+select * from students
+where length (firstname) > 4 ;
+
+8.
+select * from students
+where lastname like a% and length (lastname) >= 3;
+
+9.
+delete from students
+where not ((subject = 'English' and mark > 4) 
+or (class between 7 and 10 and mark < 3);
+
+10.
+drop table students;
+
+
+Д/З 2
+
+1.
+create table employees (
+  employee_id integer not null primary key auto_increment,
+  f_name varchar(128) not null,
+  last_name varchar(128) not null,
+  email varchar(128) not null,
+  phone varchar(128) not null
+);
+
+2.
+alter table employees
+add salary numeric (9, 2);
+
+3.
+alter table employees
+modify column salary integer;
+
+4.
+alter table employees
+change fname first_name varchar(128);`
+
+5.
+alter table employees
+drop column phone;
+
+6.
+alter table employees
+add department`varchar(128) not null;
+
+7.
+Загрузка файла employees.txt
+
+8.
+select * from employees
+where department = 'IT' and salary >= 1200;
+
+9.
+update employees
+set salary = salary * 5
+where department = 'Human Resources';
+
+10.
+select * from employees
+where department = 'Marketing' and salary < 2850;
+
+11.
+update employees
+set salary = salary * 10
+where first_name in ('Laura', 'Adam');
+
+12.
+update employees
+set last_name='King'
+where first_name='Diana' and last_name='Lorentz';
+
+13.
+delete from employees
+where department = 'Sales'
+
+14.
+update employees
+set department = 'Marketing', salary = salary + 5000
+where first_name = 'John' and last_name = 'Rassell'; 
+
+15.
+update employees
+set salary = salary / 10
+where first_name in ('Laura', 'Adam');
+
+16.
+update employees
+set email = 'BISSOTLAURA'
+where first_name = 'Laura' and last_name = 'Bissot';
+
+17.
+update employees
+set last_name = 'Lorentz', salary = salary + 2000
+where first_name='Diana' and last_name='King';
+ 
