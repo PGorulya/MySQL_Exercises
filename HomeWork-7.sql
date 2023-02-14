@@ -25,12 +25,14 @@ create table if not exists chats(
 
 create table if not exists messages(
     message_id int PRIMARY KEY AUTO_INCREMENT,
-    chat_id int,
-    user_id int,
+	chat_id int
+    sender_id int,
+    receiver_id int,
     message VARCHAR(256),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(chat_id) REFERENCES chats(chat_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+	FOREIGN KEY(chat_id) REFERENCES chats(chat_id),
+    FOREIGN KEY(sender_id) REFERENCES users(user_id),
+    FOREIGN KEY (receiver_id) REFERENCES users(user_id)
 );
 
 create table if not exists reactions(
