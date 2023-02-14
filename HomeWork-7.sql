@@ -30,7 +30,7 @@ create table if not exists messages(
     message VARCHAR(256),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(chat_id) REFERENCES chats(chat_id),
-    Foreign Key (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 create table if not exists reactions(
@@ -45,7 +45,7 @@ create table if not exists reactions(
     UNIQUE (message_id, user_id)
 );
 
-START TRANSACTION;
+
 
 INSERT INTO users (fullname, email)
 VALUES ('Maik Arend', 'maik.arend@example.com');
@@ -62,4 +62,4 @@ VALUES (1, LAST_INSERT_ID(), 'Hi everyone!');
 INSERT INTO reactions (reaction_type, message_id, user_id)
 VALUES (LAST_INSERT_ID(), LAST_INSERT_ID(), LAST_INSERT_ID());
 
-COMMIT;
+
