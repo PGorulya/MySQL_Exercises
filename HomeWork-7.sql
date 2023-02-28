@@ -19,8 +19,12 @@ create table if not exists  reaction_types(
 
 create table if not exists chats(
     chat_id int PRIMARY KEY AUTO_INCREMENT,
-    chat_title VARCHAR(256),
+    title VARCHAR(256),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+	user1_id integer
+	user2_id integer
+	FOREIGN KEY(user1_id) REFERENCES users(user_id),
+    FOREIGN KEY (user2_id) REFERENCES users(user_id)
 );
 
 create table if not exists messages(
@@ -28,8 +32,9 @@ create table if not exists messages(
 	chat_id int
     sender_id int,
     receiver_id int,
-    message VARCHAR(256),
+    text text not null,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	is_removed BOOL default false
 	FOREIGN KEY(chat_id) REFERENCES chats(chat_id),
     FOREIGN KEY(sender_id) REFERENCES users(user_id),
     FOREIGN KEY (receiver_id) REFERENCES users(user_id)
@@ -37,11 +42,10 @@ create table if not exists messages(
 
 create table if not exists reactions(
     reaction_id integer PRIMARY KEY AUTO_INCREMENT,
-    reaction_type integer,
     message_id integer,
+	value integer not null check(value between 1 and 5)
     user_id integer,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (reaction_type) REFERENCES reaction_types(type_id),
     FOREIGN KEY (message_id) REFERENCES messages(message_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     UNIQUE (message_id, user_id)
