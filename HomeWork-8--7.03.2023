@@ -17,7 +17,7 @@ db.transactions.aggregate([
     {
         '$project': {
             'amount_usd' : {
-                '$multiply': ['$sender.amount', 1.05]
+                '$multiply': ['$amount', 1.05]
             },
             '_id' : 0
         }
@@ -30,7 +30,7 @@ db.transactions.aggregate([
     {
         '$lookup': {
             'from': 'users',
-            'localField': 'sender',
+            'localField': 'sender_id',
             'foreignField': 'id',
             'as': 'sender'
         }  
@@ -52,7 +52,7 @@ db.transactions.aggregate([
     {
                 '$lookup': {
             'from': 'users',
-            'localField': 'sender',
+            'localField': 'sender_id',
             'foreignField': 'id',
             'as': 'sender'
         }
@@ -65,7 +65,7 @@ db.transactions.aggregate([
     {
         '$project': {
             'amount_usd' : {
-                '$multiply': ['$sender.amount', 1.05]
+                '$multiply': ['$amount', 1.05]
             },
             '_id' : 0
         }
