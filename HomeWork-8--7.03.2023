@@ -1,0 +1,76 @@
+//(1) вывести размеры EURO-транзакций из ЕВРОПЫ в долларах
+db.transactions.aggregate([
+    {
+        '$lookup': {
+            'from': 'users',
+            'localField': 'sender',
+            'foreignField': 'id',
+            'as': 'sender'
+        }
+    },
+    {
+        '$match': {
+            'currency': 'eur',
+            'sender.is_europa' : true
+        }
+    },
+    {
+        '$project': {
+            'amount_usd' : {
+                '$multiply': ['$sender.amount', 1.05]
+            },
+            '_id' : 0
+        }
+    }
+])
+
+
+//(2) вывести количество USD-транзакций из 'China'
+db.transactions.aggregate([
+    {
+        '$lookup': {
+            'from': 'users',
+            'localField': 'sender',
+            'foreignField': 'id',
+            'as': 'sender'
+        }  
+    },
+    {
+        '$match': {
+            'sender.country': 'China',
+            'sender.curreny': 'USD'
+        }
+    },
+    {
+        '$count': 'sender'
+    }
+])
+
+
+//(3) вывести три самых больших транзакции в 'usd'
+db.transactions.aggregate([
+    {
+                '$lookup': {
+            'from': 'users',
+            'localField': 'sender',
+            'foreignField': 'id',
+            'as': 'sender'
+        }
+    },
+    {
+        '$sort': {
+            'sender.amount' : -1
+        }
+    },
+    {
+        '$project': {
+            'amount_usd' : {
+                '$multiply': ['$sender.amount', 1.05]
+            },
+            '_id' : 0
+        }
+    },
+    {
+        '$limit' : 3
+    }
+])
